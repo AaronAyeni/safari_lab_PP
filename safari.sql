@@ -120,3 +120,8 @@ SELECT COUNT(DISTINCT staff.id )
 FROM staff
 JOIN assignment ON staff.id = assignment.employeeId
 WHERE assignment.enclosureId = 3;
+-- The names of the other animals sharing an enclosure with a given animal (eg. find the names of all the animals sharing the big cat field with Tony)
+SELECT animal.name
+FROM animal
+JOIN animal AS animal2 ON animal.enclosure_id = animal2.enclosure_id
+WHERE animal2.name = 'Marty' AND animal.name != 'Marty';
