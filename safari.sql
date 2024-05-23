@@ -110,7 +110,13 @@ SELECT staff.name FROM staff JOIN assignment ON staff.id = assignment.employeeId
 SELECT staff.name FROM staff JOIN assignment ON staff.id = assignment.employeeId JOIN enclosure ON assignment.enclosureId = enclosure.Id WHERE enclosure.closedForMaintenance = true; 
 
 -- name of the enclosure where the oldest animal lives
-SELECT enclosure.name FROM enclosure JOIN animal ON enclosure.id = animal.enclosure_id ORDER BY age DESC LIMIT 1
+SELECT enclosure.name FROM enclosure JOIN animal ON enclosure.id = animal.enclosure_id ORDER BY age DESC LIMIT 1;
 
 -- number of animal types each keeper is assigned to work with
-SELECT COUNT(DISTINCT animal.type) FROM assignment JOIN staff ON assignment.employeeId = staff.id JOIN enclosure ON assignment.enclosureid = enclosureid JOIN animal ON enclosure.id = animal.enclosure_id WHERE staff.id = 5
+ SELECT COUNT(DISTINCT animal.type) FROM assignment JOIN staff ON assignment.employeeId = staff.id JOIN enclosure ON assignment.enclosureid = enclosureid JOIN animal ON enclosure.id = animal.enclosure_id WHERE staff.id = 5;
+
+-- The number of different keepers who have been assigned to work in a given enclosure
+SELECT COUNT(DISTINCT staff.id )
+FROM staff
+JOIN assignment ON staff.id = assignment.employeeId
+WHERE assignment.enclosureId = 3;
