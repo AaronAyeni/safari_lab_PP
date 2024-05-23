@@ -43,7 +43,7 @@ INSERT INTO staff(name, employeeNumber) VALUES ('Captain Chloe',5);
 INSERT INTO enclosure(name, capacity, closedForMaintenance) VALUES ('Big Cat Field', 20, false);
 INSERT INTO enclosure(name, capacity, closedForMaintenance) VALUES ('Monkey Mansion', 30, false);
 INSERT INTO enclosure(name, capacity, closedForMaintenance) VALUES ('Snake Pit', 100, true);
-INSERT INTO enclosure(name, capacity, closedForMaintenance) VALUES ('Lion Land', 20, true);
+INSERT INTO enclosure(name, capacity, closedForMaintenance) VALUES ('Lion Land', 20, false);
 INSERT INTO enclosure(name, capacity, closedForMaintenance) VALUES ('Zebra Zone', 15, false);
 
 -- ASSIGNMENT;
@@ -58,8 +58,6 @@ INSERT INTO assignment(day, employeeId, enclosureId) VALUES ('Tuesday', 2, 3);
 INSERT INTO assignment(day, employeeId, enclosureId) VALUES ('Wednesday', 2, 2);
 INSERT INTO assignment(day, employeeId, enclosureId) VALUES ('Friday', 2, 1);
 INSERT INTO assignment(day, employeeId, enclosureId) VALUES ('Saturday', 2, 4);
-
-
 
 INSERT INTO assignment(day, employeeId, enclosureId) VALUES ('Monday', 3, 4);
 INSERT INTO assignment(day, employeeId, enclosureId) VALUES ('Tuesday', 3, 2);
@@ -86,8 +84,33 @@ INSERT INTO animal(name, type, age, enclosure_id) VALUES ('Tony', 'Tiger', 59, 1
 INSERT INTO animal(name, type, age, enclosure_id) VALUES ('George', 'Monkey', 3, 2);
 INSERT INTO animal(name, type, age, enclosure_id) VALUES ('Naga', 'Python', 6, 3);
 INSERT INTO animal(name, type, age, enclosure_id) VALUES ('Alex', 'Lion', 14, 4);
-INSERT INTO animal(name, type, age, enclosure_id) VALUES ('Marty', 'Zebra', 8, 1);
+INSERT INTO animal(name, type, age, enclosure_id) VALUES ('Marty', 'Zebra', 8, 5);
+INSERT INTO animal(name, type, age, enclosure_id) VALUES ('Zain', 'Zebra', 11, 5);
 
-SELECT * FROM animal;
+--SELECT * FROM animal;
+
+SELECT name FROM animal WHERE enclosure_id = 5;
 
 
+
+-- <-- 1. enter code --> 
+-- Writing a query to find the name of the animals from 'Monkey Mansion'
+SELECT name FROM animal WHERE enclosure_id = 5;
+
+-- <-- 2. enter code -->
+-- Finding the name of the staff working in a given enclosure 
+SELECT staff.name FROM staff JOIN assignment ON staff.id = assignment.employeeId WHERE assignment.enclosureId = 2;
+-- if we wanted to check specific day --
+SELECT staff.name FROM staff JOIN assignment ON staff.id = assignment.employeeId WHERE assignment.enclosureId = 2 AND assignment.day = 'Tuesday';
+
+
+-- EXTENSIONS --
+
+-- names of staff working on closed maintenance
+SELECT staff.name FROM staff JOIN assignment ON staff.id = assignment.employeeId JOIN enclosure ON assignment.enclosureId = enclosure.Id WHERE enclosure.closedForMaintenance = true; 
+
+-- name of the enclosure where the oldest animal lives
+SELECT enclosure.name FROM enclosure JOIN animal ON enclosure.id = animal.enclosure_id ORDER BY age DESC LIMIT 1
+
+-- number of animal types each keeper is assigned to work with
+SELECT COUNT(DISTINCT animal.type) FROM assignment JOIN staff ON assignment.employeeId = staff.id JOIN enclosure ON assignment.enclosureid = enclosureid JOIN animal ON enclosure.id = animal.enclosure_id WHERE staff.id = 5
